@@ -56,16 +56,16 @@ val_labels = labels[6000:]
 
 # Build LSTM autoencoder model
 inputs = Input(shape=(timesteps, features_num))
-encoded = LSTM(16, activation='relu', return_sequences=True, kernel_regularizer=l2(0.01))(inputs)
+encoded = LSTM(16, activation='relu', return_sequences=True, kernel_regularizer=l2(5))(inputs)
 encoded = BatchNormalization()(encoded)
-encoded = LSTM(4, activation='relu', return_sequences=False, kernel_regularizer=l2(0.01))(encoded)
+encoded = LSTM(4, activation='relu', return_sequences=False, kernel_regularizer=l2(5))(encoded)
 encoded = BatchNormalization()(encoded)
 
 # Decoder
 decoded = RepeatVector(timesteps)(encoded)
-decoded = LSTM(4, activation='relu', return_sequences=True, kernel_regularizer=l2(0.01))(decoded)
+decoded = LSTM(4, activation='relu', return_sequences=True, kernel_regularizer=l2(5))(decoded)
 decoded = BatchNormalization()(decoded)
-decoded = LSTM(16, activation='relu', return_sequences=True, kernel_regularizer=l2(0.01))(decoded)
+decoded = LSTM(16, activation='relu', return_sequences=True, kernel_regularizer=l2(5))(decoded)
 decoded = BatchNormalization()(decoded)
 decoded = TimeDistributed(Dense(features_num))(decoded)
 
